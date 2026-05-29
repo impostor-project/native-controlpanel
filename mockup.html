@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ImpoSTØR Control Panel</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    background: #e8e8e8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    color: #1d1d1f;
+  }
+
+  /* ── Main window chrome ── */
+  .window {
+    width: 700px;
+    min-height: 520px;
+    background: #f5f5f7;
+    border-radius: 10px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.35), 0 1px 0 rgba(255,255,255,.6) inset;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Title bar ── */
+  .titlebar {
+    height: 28px;
+    background: linear-gradient(to bottom, #d0d0d0, #c4c4c4);
+    border-bottom: 1px solid #b0b0b0;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    gap: 8px;
+    flex-shrink: 0;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .traffic { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(0,0,0,.15); }
+  .traffic.close  { background: #ff5f57; }
+  .traffic.min    { background: #febc2e; }
+  .traffic.max    { background: #28c840; }
+  .titlebar-label {
+    flex: 1; text-align: center; font-size: 12px; font-weight: 600;
+    color: #333; letter-spacing: .01em; margin-right: 44px;
+  }
+
+  /* ── Device header ── */
+  .device-header {
+    background: linear-gradient(to bottom, #f0f0f0, #e8e8e8);
+    border-bottom: 1px solid #c8c8c8;
+    padding: 16px 20px 14px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+  .device-icon {
+    width: 56px; height: 56px;
+    background: linear-gradient(145deg, #5a5a5a, #2a2a2a);
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.4);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .device-icon svg { width: 34px; height: 34px; }
+  .device-info { flex: 1; min-width: 0; }
+  .device-name {
+    font-size: 16px; font-weight: 700; color: #1d1d1f;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .device-sub { font-size: 12px; color: #555; margin-top: 2px; }
+  .device-fw  { font-size: 11px; color: #888; margin-top: 1px; }
+
+  .status-group {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    flex-shrink: 0; cursor: pointer;
+    user-select: none; -webkit-user-select: none;
+  }
+  .status-dot {
+    width: 14px; height: 14px; border-radius: 50%;
+    background: #34c759;
+    box-shadow: 0 0 6px 2px rgba(52,199,89,.5);
+    transition: background .25s, box-shadow .25s;
+  }
+  .status-dot.offline {
+    background: #ff3b30;
+    box-shadow: 0 0 6px 2px rgba(255,59,48,.5);
+  }
+  .status-label {
+    font-size: 10px; color: #555; text-align: center;
+    transition: color .25s;
+  }
+  .status-label.offline { color: #ff3b30; }
+
+  /* ── Toolbar (below header) ── */
+  .toolbar {
+    background: #dcdcdc;
+    border-bottom: 1px solid #bbb;
+    display: flex;
+    align-items: center;
+    padding: 4px 10px;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  .tb-btn {
+    font-size: 11px; padding: 3px 10px; border-radius: 4px;
+    border: 1px solid #bbb;
+    background: linear-gradient(to bottom, #f8f8f8, #e8e8e8);
+    cursor: pointer; color: #333;
+  }
+  .tb-btn:hover { background: linear-gradient(to bottom, #fff, #f0f0f0); }
+  .tb-btn:active { background: linear-gradient(to bottom, #e0e0e0, #d0d0d0); }
+
+  /* ── Tab bar ── */
+  .tabs {
+    display: flex;
+    background: #e0e0e0;
+    border-bottom: 1px solid #c0c0c0;
+    padding: 0 16px;
+    flex-shrink: 0;
+  }
+  .tab {
+    padding: 8px 16px;
+    font-size: 12px; font-weight: 500;
+    color: #555;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: color .15s, border-color .15s;
+    user-select: none; -webkit-user-select: none;
+    margin-bottom: -1px;
+  }
+  .tab:hover { color: #1d1d1f; }
+  .tab.active { color: #0071e3; border-bottom-color: #0071e3; font-weight: 600; }
+
+  /* ── Tab content ── */
+  .tab-content { flex: 1; overflow-y: auto; padding: 18px 20px; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── Shared section card ── */
+  .card {
+    background: #fff;
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+  .card-title {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .06em; color: #888;
+    padding: 8px 12px 6px;
+    border-bottom: 1px solid #ebebeb;
+    background: #fafafa;
+  }
+  .card-body { padding: 10px 12px; }
+
+  /* ── KV rows ── */
+  .kv-row { display: flex; padding: 4px 0; border-bottom: 1px solid #f0f0f0; }
+  .kv-row:last-child { border-bottom: none; }
+  .kv-key   { width: 160px; flex-shrink: 0; color: #888; font-size: 12px; }
+  .kv-value { flex: 1; font-size: 12px; font-weight: 500; }
+
+  /* ── Progress bar ── */
+  .progress-wrap { background: #e0e0e0; border-radius: 4px; height: 8px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 4px; transition: width .4s; }
+  .fill-green  { background: #34c759; }
+  .fill-yellow { background: #febc2e; }
+  .fill-red    { background: #ff3b30; }
+
+  /* ── Table ── */
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th {
+    text-align: left; padding: 6px 10px;
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .06em; color: #888;
+    background: #fafafa;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  td { padding: 7px 10px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f5f5f7; }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 7px; border-radius: 10px;
+    font-size: 10px; font-weight: 600;
+  }
+  .badge-green  { background: #d1f4d9; color: #1a7e2e; }
+  .badge-red    { background: #ffd6d4; color: #b22222; }
+  .badge-yellow { background: #fff3cc; color: #8a6300; }
+  .badge-gray   { background: #e8e8e8; color: #555; }
+
+  /* ── Services grid ── */
+  .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .service-card {
+    background: #fff; border: 1px solid #d0d0d0; border-radius: 8px;
+    padding: 12px 14px; display: flex; align-items: center; gap: 12px;
+  }
+  .service-icon {
+    width: 32px; height: 32px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .service-info { flex: 1; min-width: 0; }
+  .service-name { font-size: 13px; font-weight: 600; }
+  .service-desc { font-size: 11px; color: #888; margin-top: 1px; }
+  .toggle {
+    width: 34px; height: 20px; border-radius: 10px; flex-shrink: 0;
+    cursor: pointer; position: relative;
+    transition: background .2s;
+    border: none; outline: none; appearance: none; -webkit-appearance: none;
+  }
+  .toggle::after {
+    content: ''; position: absolute;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: #fff;
+    top: 2px; left: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    transition: left .2s;
+  }
+  .toggle.on  { background: #34c759; }
+  .toggle.off { background: #c8c8c8; }
+  .toggle.on::after  { left: 16px; }
+
+  /* ── Users bar ── */
+  .user-actions { display: flex; gap: 8px; margin-top: 10px; justify-content: flex-end; }
+  .btn {
+    font-size: 12px; padding: 5px 14px; border-radius: 6px;
+    border: 1px solid #bbb; cursor: pointer; font-weight: 500;
+    background: linear-gradient(to bottom, #f8f8f8, #e8e8e8); color: #333;
+  }
+  .btn:hover { background: linear-gradient(to bottom, #fff, #f0f0f0); }
+  .btn.primary {
+    background: linear-gradient(to bottom, #0a84ff, #0071e3);
+    border-color: #005ec3; color: #fff;
+  }
+  .btn.primary:hover { background: linear-gradient(to bottom, #1f8fff, #0a84ff); }
+
+  /* ── Storage usage mini-bar ── */
+  .usage-row { display: flex; align-items: center; gap: 8px; }
+  .usage-bar { flex: 1; }
+  .usage-label { width: 50px; text-align: right; font-size: 11px; color: #555; flex-shrink: 0; }
+
+  /* ── Footer ── */
+  .footer {
+    background: #e4e4e4;
+    border-top: 1px solid #c8c8c8;
+    padding: 6px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 11px; color: #888;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+<div class="window">
+
+  <!-- Title bar -->
+  <div class="titlebar">
+    <span class="traffic close"></span>
+    <span class="traffic min"></span>
+    <span class="traffic max"></span>
+    <span class="titlebar-label">ImpoSTØR Control Panel</span>
+  </div>
+
+  <!-- Device header -->
+  <div class="device-header">
+    <div class="device-icon">
+      <!-- NAS icon (stylised stack of disks) -->
+      <svg viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="3" y="6"  width="28" height="7" rx="2" fill="#bbb"/>
+        <rect x="3" y="15" width="28" height="7" rx="2" fill="#aaa"/>
+        <rect x="3" y="24" width="28" height="4" rx="2" fill="#999"/>
+        <circle cx="27" cy="9.5"  r="1.5" fill="#34c759"/>
+        <circle cx="27" cy="18.5" r="1.5" fill="#34c759"/>
+        <rect x="5" y="8"  width="14" height="3" rx="1" fill="#777"/>
+        <rect x="5" y="17" width="14" height="3" rx="1" fill="#777"/>
+      </svg>
+    </div>
+    <div class="device-info">
+      <div class="device-name">impostor-nas-01</div>
+      <div class="device-sub">ImpoSTØR NAS &nbsp;·&nbsp; 192.168.1.10 &nbsp;·&nbsp; 6-bay</div>
+      <div class="device-fw">Firmware 2.3.1 &nbsp;·&nbsp; Uptime 14d 6h 22m</div>
+    </div>
+    <div class="status-group" id="statusGroup" title="Click to toggle (demo)">
+      <div class="status-dot" id="statusDot"></div>
+      <div class="status-label" id="statusLabel">Online</div>
+    </div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <button class="tb-btn">&#8635; Refresh</button>
+    <button class="tb-btn">Connect&#8230;</button>
+  </div>
+
+  <!-- Tab bar -->
+  <div class="tabs">
+    <div class="tab active" data-tab="summary">Summary</div>
+    <div class="tab" data-tab="storage">Storage</div>
+    <div class="tab" data-tab="network">Network</div>
+    <div class="tab" data-tab="services">Services</div>
+    <div class="tab" data-tab="users">Users</div>
+  </div>
+
+  <!-- Tab content -->
+  <div class="tab-content">
+
+    <!-- SUMMARY -->
+    <div class="tab-panel active" id="tab-summary">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div>
+          <div class="card">
+            <div class="card-title">System</div>
+            <div class="card-body">
+              <div class="kv-row"><span class="kv-key">Model</span><span class="kv-value">ImpoSTØR 6-Bay v2</span></div>
+              <div class="kv-row"><span class="kv-key">Serial</span><span class="kv-value">IMP-2024-0042</span></div>
+              <div class="kv-row"><span class="kv-key">Firmware</span><span class="kv-value">2.3.1</span></div>
+              <div class="kv-row"><span class="kv-key">CPU</span><span class="kv-value">Intel Atom C3538 · 12%</span></div>
+              <div class="kv-row"><span class="kv-key">RAM</span><span class="kv-value">8 GB &nbsp;·&nbsp; 3.1 GB used</span></div>
+              <div class="kv-row"><span class="kv-key">Temperature</span><span class="kv-value">38 °C</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Network</div>
+            <div class="card-body">
+              <div class="kv-row"><span class="kv-key">IP Address</span><span class="kv-value">192.168.1.10</span></div>
+              <div class="kv-row"><span class="kv-key">MAC</span><span class="kv-value">AA:BB:CC:DD:EE:01</span></div>
+              <div class="kv-row"><span class="kv-key">Link</span><span class="kv-value">1 Gbps &nbsp;·&nbsp; Full duplex</span></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-title">Storage Pool</div>
+            <div class="card-body">
+              <div class="kv-row"><span class="kv-key">Total</span><span class="kv-value">36 TB (RAIDZ2)</span></div>
+              <div class="kv-row"><span class="kv-key">Used</span><span class="kv-value">21.4 TB</span></div>
+              <div class="kv-row"><span class="kv-key">Free</span><span class="kv-value">14.6 TB</span></div>
+              <div class="kv-row"><span class="kv-key">Health</span><span class="kv-value"><span class="badge badge-green">ONLINE</span></span></div>
+            </div>
+            <div style="padding:0 12px 12px;">
+              <div class="usage-row">
+                <div class="usage-bar">
+                  <div class="progress-wrap"><div class="progress-fill fill-yellow" style="width:59%"></div></div>
+                </div>
+                <div class="usage-label">59%</div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Active Services</div>
+            <div class="card-body">
+              <div class="kv-row"><span class="kv-key">SMB / CIFS</span><span class="kv-value"><span class="badge badge-green">Running</span></span></div>
+              <div class="kv-row"><span class="kv-key">NFS</span><span class="kv-value"><span class="badge badge-green">Running</span></span></div>
+              <div class="kv-row"><span class="kv-key">SSH</span><span class="kv-value"><span class="badge badge-green">Running</span></span></div>
+              <div class="kv-row"><span class="kv-key">FTP</span><span class="kv-value"><span class="badge badge-red">Stopped</span></span></div>
+              <div class="kv-row"><span class="kv-key">DLNA</span><span class="kv-value"><span class="badge badge-red">Stopped</span></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STORAGE -->
+    <div class="tab-panel" id="tab-storage">
+      <div class="card">
+        <div class="card-title">Storage Pool &nbsp;·&nbsp; RAIDZ2</div>
+        <table>
+          <thead>
+            <tr><th>Bay</th><th>Model</th><th>Capacity</th><th>Usage</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Bay 1</td><td>WD Red Pro 6 TB</td><td>6 TB</td>
+              <td><div class="usage-row"><div class="usage-bar"><div class="progress-wrap"><div class="progress-fill fill-green" style="width:42%"></div></div></div><div class="usage-label">42%</div></div></td>
+              <td><span class="badge badge-green">Healthy</span></td>
+            </tr>
+            <tr>
+              <td>Bay 2</td><td>WD Red Pro 6 TB</td><td>6 TB</td>
+              <td><div class="usage-row"><div class="usage-bar"><div class="progress-wrap"><div class="progress-fill fill-green" style="width:42%"></div></div></div><div class="usage-label">42%</div></div></td>
+              <td><span class="badge badge-green">Healthy</span></td>
+            </tr>
+            <tr>
+              <td>Bay 3</td><td>Seagate IronWolf 6 TB</td><td>6 TB</td>
+              <td><div class="usage-row"><div class="usage-bar"><div class="progress-wrap"><div class="progress-fill fill-yellow" style="width:67%"></div></div></div><div class="usage-label">67%</div></div></td>
+              <td><span class="badge badge-green">Healthy</span></td>
+            </tr>
+            <tr>
+              <td>Bay 4</td><td>Seagate IronWolf 6 TB</td><td>6 TB</td>
+              <td><div class="usage-row"><div class="usage-bar"><div class="progress-wrap"><div class="progress-fill fill-yellow" style="width:67%"></div></div></div><div class="usage-label">67%</div></div></td>
+              <td><span class="badge badge-green">Healthy</span></td>
+            </tr>
+            <tr>
+              <td>Bay 5</td><td>WD Red Pro 6 TB</td><td>6 TB</td>
+              <td><div class="usage-row"><div class="usage-bar"><div class="progress-wrap"><div class="progress-fill fill-red" style="width:88%"></div></div></div><div class="usage-label">88%</div></div></td>
+              <td><span class="badge badge-yellow">Warning</span></td>
+            </tr>
+            <tr>
+              <td>Bay 6</td><td>— (empty)</td><td>—</td>
+              <td>—</td>
+              <td><span class="badge badge-gray">Empty</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-title">Shared Folders</div>
+        <table>
+          <thead><tr><th>Name</th><th>Path</th><th>Protocol</th><th>Size</th></tr></thead>
+          <tbody>
+            <tr><td>media</td><td>/volume1/media</td><td>SMB · NFS</td><td>14.2 TB</td></tr>
+            <tr><td>backups</td><td>/volume1/backups</td><td>SMB</td><td>5.8 TB</td></tr>
+            <tr><td>home</td><td>/volume1/home</td><td>SMB · NFS</td><td>1.4 TB</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- NETWORK -->
+    <div class="tab-panel" id="tab-network">
+      <div class="card">
+        <div class="card-title">Interfaces</div>
+        <table>
+          <thead><tr><th>Interface</th><th>IP Address</th><th>MAC Address</th><th>Speed</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>eth0</td><td>192.168.1.10 / 24</td><td>AA:BB:CC:DD:EE:01</td><td>1 Gbps</td>
+              <td><span class="badge badge-green">Up</span></td>
+            </tr>
+            <tr>
+              <td>eth1</td><td>—</td><td>AA:BB:CC:DD:EE:02</td><td>1 Gbps</td>
+              <td><span class="badge badge-gray">Down</span></td>
+            </tr>
+            <tr>
+              <td>lo</td><td>127.0.0.1</td><td>—</td><td>—</td>
+              <td><span class="badge badge-green">Up</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-title">IP Configuration</div>
+        <div class="card-body">
+          <div class="kv-row"><span class="kv-key">IPv4 mode</span><span class="kv-value">Static</span></div>
+          <div class="kv-row"><span class="kv-key">Address</span><span class="kv-value">192.168.1.10</span></div>
+          <div class="kv-row"><span class="kv-key">Subnet mask</span><span class="kv-value">255.255.255.0</span></div>
+          <div class="kv-row"><span class="kv-key">Gateway</span><span class="kv-value">192.168.1.1</span></div>
+          <div class="kv-row"><span class="kv-key">DNS servers</span><span class="kv-value">1.1.1.1, 8.8.8.8</span></div>
+          <div class="kv-row"><span class="kv-key">Hostname</span><span class="kv-value">impostor-nas-01.local</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVICES -->
+    <div class="tab-panel" id="tab-services">
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon" style="background:#e8f0ff;">🗂️</div>
+          <div class="service-info">
+            <div class="service-name">SMB / CIFS</div>
+            <div class="service-desc">Windows file sharing · port 445</div>
+          </div>
+          <button class="toggle on" title="Toggle"></button>
+        </div>
+        <div class="service-card">
+          <div class="service-icon" style="background:#e8ffe8;">📁</div>
+          <div class="service-info">
+            <div class="service-name">NFS</div>
+            <div class="service-desc">Unix/Linux file sharing · port 2049</div>
+          </div>
+          <button class="toggle on" title="Toggle"></button>
+        </div>
+        <div class="service-card">
+          <div class="service-icon" style="background:#fff8e8;">🔒</div>
+          <div class="service-info">
+            <div class="service-name">SSH</div>
+            <div class="service-desc">Secure shell access · port 22</div>
+          </div>
+          <button class="toggle on" title="Toggle"></button>
+        </div>
+        <div class="service-card">
+          <div class="service-icon" style="background:#ffe8e8;">📤</div>
+          <div class="service-info">
+            <div class="service-name">FTP</div>
+            <div class="service-desc">File transfer protocol · port 21</div>
+          </div>
+          <button class="toggle off" title="Toggle"></button>
+        </div>
+        <div class="service-card">
+          <div class="service-icon" style="background:#f0e8ff;">📺</div>
+          <div class="service-info">
+            <div class="service-name">DLNA</div>
+            <div class="service-desc">Media server · port 8200</div>
+          </div>
+          <button class="toggle off" title="Toggle"></button>
+        </div>
+        <div class="service-card">
+          <div class="service-icon" style="background:#e8f8ff;">⚙️</div>
+          <div class="service-info">
+            <div class="service-name">Web UI</div>
+            <div class="service-desc">HTTP admin panel · port 8080</div>
+          </div>
+          <button class="toggle on" title="Toggle"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- USERS -->
+    <div class="tab-panel" id="tab-users">
+      <div class="card">
+        <div class="card-title">Local Users</div>
+        <table>
+          <thead><tr><th>Username</th><th>Full Name</th><th>Role</th><th>Last Login</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>admin</strong></td><td>Administrator</td><td><span class="badge badge-yellow">Admin</span></td>
+              <td>2026-05-29 08:14</td><td><span class="badge badge-green">Active</span></td>
+            </tr>
+            <tr>
+              <td>alice</td><td>Alice Smith</td><td><span class="badge badge-gray">User</span></td>
+              <td>2026-05-28 19:42</td><td><span class="badge badge-green">Active</span></td>
+            </tr>
+            <tr>
+              <td>bob</td><td>Bob Jones</td><td><span class="badge badge-gray">User</span></td>
+              <td>2026-05-20 11:05</td><td><span class="badge badge-green">Active</span></td>
+            </tr>
+            <tr>
+              <td>backup_svc</td><td>Backup Service</td><td><span class="badge badge-gray">Service</span></td>
+              <td>2026-05-29 03:00</td><td><span class="badge badge-green">Active</span></td>
+            </tr>
+            <tr>
+              <td>guest</td><td>Guest</td><td><span class="badge badge-gray">User</span></td>
+              <td>Never</td><td><span class="badge badge-red">Disabled</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="user-actions">
+        <button class="btn">Remove</button>
+        <button class="btn">Edit&#8230;</button>
+        <button class="btn primary">Add User&#8230;</button>
+      </div>
+    </div>
+
+  </div><!-- /tab-content -->
+
+  <!-- Footer status bar -->
+  <div class="footer">
+    <span id="footerStatus">Connected &nbsp;·&nbsp; 192.168.1.10</span>
+    <span>Last refreshed: just now</span>
+  </div>
+
+</div><!-- /window -->
+
+<script>
+  // Tab switching
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Status dot toggle (demo)
+  let online = true;
+  document.getElementById('statusGroup').addEventListener('click', () => {
+    online = !online;
+    const dot   = document.getElementById('statusDot');
+    const label = document.getElementById('statusLabel');
+    const footer = document.getElementById('footerStatus');
+    dot.classList.toggle('offline', !online);
+    label.classList.toggle('offline', !online);
+    label.textContent = online ? 'Online' : 'Offline';
+    footer.textContent = online
+      ? 'Connected · 192.168.1.10'
+      : 'Disconnected';
+  });
+
+  // Service toggle buttons
+  document.querySelectorAll('.toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.classList.toggle('on');
+      btn.classList.toggle('off');
+    });
+  });
+</script>
+</body>
+</html>
