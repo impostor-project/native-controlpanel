@@ -17,12 +17,10 @@
 
   /* ── Window chrome ── */
   .window {
-    width: 860px;
-    height: 560px;
-    display: flex;
-    flex-direction: column;
+    width: 880px; height: 590px;
+    display: flex; flex-direction: column;
     border: 2px solid #c8a000;
-    box-shadow: 3px 3px 12px rgba(0,0,0,.5);
+    box-shadow: 3px 3px 14px rgba(0,0,0,.55);
   }
 
   /* ── Title bar ── */
@@ -30,220 +28,217 @@
     height: 26px;
     background: linear-gradient(to bottom, #f5c800, #d8a800);
     border-bottom: 1px solid #b89000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    flex-shrink: 0;
-    user-select: none;
-    cursor: default;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; flex-shrink: 0;
+    user-select: none; cursor: default;
   }
-  .titlebar-title { font-size: 12px; font-weight: bold; color: #000; }
+  .titlebar-title { font-size: 12px; font-weight: bold; }
   .titlebar-btns {
     position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
     display: flex; gap: 2px;
   }
   .tbtn {
     width: 18px; height: 18px; border: 1px solid #888;
-    background: linear-gradient(to bottom, #e0e0e0, #c0c0c0);
+    background: linear-gradient(to bottom, #e8e8e8, #c0c0c0);
     display: flex; align-items: center; justify-content: center;
-    font-size: 10px; cursor: pointer; color: #333;
-    font-weight: bold;
+    font-size: 10px; cursor: pointer; font-weight: bold;
   }
 
   /* ── Menu bar ── */
   .menubar {
-    height: 22px;
-    background: #d4d0c8;
+    height: 22px; background: #d4d0c8;
     border-bottom: 1px solid #a0a0a0;
-    display: flex;
-    align-items: center;
-    padding: 0 4px;
-    flex-shrink: 0;
-    position: relative;
-    z-index: 100;
+    display: flex; align-items: center; padding: 0 4px;
+    flex-shrink: 0; position: relative; z-index: 100;
   }
   .menu-item {
-    padding: 2px 8px;
-    cursor: pointer;
-    font-size: 12px;
-    border-radius: 2px;
-    position: relative;
+    padding: 2px 8px; cursor: pointer; font-size: 12px;
+    border-radius: 2px; position: relative;
   }
   .menu-item:hover, .menu-item.open { background: #0a246a; color: #fff; }
-
-  /* ── Dropdown ── */
   .dropdown {
-    display: none;
-    position: absolute;
-    top: 100%; left: 0;
-    background: #f0ece4;
-    border: 1px solid #808080;
-    box-shadow: 2px 2px 5px rgba(0,0,0,.3);
-    min-width: 160px;
-    z-index: 200;
+    display: none; position: absolute; top: 100%; left: 0;
+    background: #f0ece4; border: 1px solid #808080;
+    box-shadow: 2px 2px 5px rgba(0,0,0,.3); min-width: 165px; z-index: 200;
   }
   .menu-item.open .dropdown { display: block; }
   .dd-item {
-    padding: 4px 20px;
-    cursor: pointer;
-    font-size: 12px;
-    white-space: nowrap;
-    color: #000;
+    padding: 4px 20px; cursor: pointer; font-size: 12px;
+    white-space: nowrap; color: #000;
   }
   .dd-item:hover { background: #0a246a; color: #fff; }
   .dd-sep { height: 1px; background: #a0a0a0; margin: 2px 0; }
 
-  /* ── Main body (sidebar + content) ── */
-  .main-body {
-    flex: 1;
-    display: flex;
-    background: #d4d0c8;
-    overflow: hidden;
-  }
+  /* ── Layout ── */
+  .main-body { flex: 1; display: flex; background: #d4d0c8; overflow: hidden; }
 
   /* ── Sidebar ── */
   .sidebar {
-    width: 110px;
-    flex-shrink: 0;
-    background: #d4d0c8;
+    width: 112px; flex-shrink: 0; background: #d4d0c8;
     border-right: 1px solid #a0a0a0;
-    display: flex;
-    flex-direction: column;
-    padding: 4px 4px 4px 4px;
-    gap: 2px;
-    overflow-y: auto;
+    display: flex; flex-direction: column;
+    padding: 4px; gap: 2px; overflow-y: auto;
   }
-
-  /* Small icon row above sidebar buttons */
   .sidebar-topbar {
-    height: 24px;
-    display: flex;
-    align-items: center;
-    padding: 0 2px;
-    margin-bottom: 2px;
-    flex-shrink: 0;
+    height: 24px; display: flex; align-items: center;
+    padding: 0 2px; margin-bottom: 2px; flex-shrink: 0;
   }
   .icon-btn {
     width: 22px; height: 22px;
     background: linear-gradient(to bottom, #f0f0f0, #d4d0c8);
-    border: 1px solid #888;
-    border-bottom-color: #444; border-right-color: #444;
+    border: 1px solid #888; border-bottom-color: #444; border-right-color: #444;
     display: flex; align-items: center; justify-content: center;
-    cursor: pointer; font-size: 10px; color: #333;
+    cursor: pointer; font-size: 11px;
   }
-  .icon-btn:active { border: 1px solid #444; border-bottom-color: #888; border-right-color: #888; }
-
-  /* Sidebar nav buttons */
   .nav-btn {
-    width: 100%;
-    padding: 3px 6px;
-    text-align: left;
-    font-size: 12px;
+    width: 100%; padding: 3px 6px; text-align: left; font-size: 12px;
     background: linear-gradient(to bottom, #f0ece4, #d8d4cc);
-    border: 1px solid #888;
-    border-bottom-color: #444; border-right-color: #444;
-    cursor: pointer;
-    color: #000;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    border: 1px solid #888; border-bottom-color: #444; border-right-color: #444;
+    cursor: pointer; color: #000; white-space: nowrap;
+    overflow: hidden; text-overflow: ellipsis;
   }
-  .nav-btn:hover { background: linear-gradient(to bottom, #f8f8f0, #e8e4dc); }
-  .nav-btn:active,
+  .nav-btn:hover { background: linear-gradient(to bottom, #faf8f0, #e8e4dc); }
   .nav-btn.active {
-    background: linear-gradient(to bottom, #c8c4bc, #d8d4cc);
-    border: 1px solid #444;
-    border-bottom-color: #888; border-right-color: #888;
+    background: linear-gradient(to bottom, #c8c4bc, #d0ccc4);
+    border: 1px solid #444; border-bottom-color: #888; border-right-color: #888;
   }
 
-  /* ── Content pane ── */
-  .content {
-    flex: 1;
-    background: #d4d0c8;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+  /* ── Content area ── */
+  .content { flex: 1; position: relative; overflow: hidden; background: #d4d0c8; }
+  .panel {
+    display: none; position: absolute; inset: 0;
+    padding: 10px 12px; overflow-y: auto; background: #d4d0c8;
   }
-  .content-topbar {
-    height: 26px;
-    display: flex;
-    align-items: center;
-    padding: 0 6px;
-    gap: 6px;
-    border-bottom: 1px solid #a0a0a0;
-    flex-shrink: 0;
-  }
-
-  /* Content panels */
-  .panel { display: none; flex: 1; padding: 12px; overflow-y: auto; }
   .panel.active { display: block; }
 
-  /* Form rows */
-  .form-row {
-    display: flex; align-items: center; gap: 8px;
-    margin-bottom: 8px;
-  }
-  .form-label { width: 90px; flex-shrink: 0; font-size: 12px; }
+  /* ── Classic controls ── */
 
-  /* Lazarus-style text input */
-  .laz-input {
-    font-size: 12px; padding: 2px 4px;
-    border: 1px solid #808080; border-bottom-color: #fff; border-right-color: #fff;
-    background: #fff; width: 160px;
-    outline: none;
+  /* GroupBox */
+  .gb {
+    border: 2px groove #a0a0a0; padding: 10px 8px 8px;
+    margin-bottom: 10px; position: relative;
   }
-  .laz-input:focus { border-color: #0a246a; }
+  .gb-title {
+    position: absolute; top: -7px; left: 6px;
+    background: #d4d0c8; padding: 0 3px;
+    font-size: 11px; font-weight: bold;
+  }
+
+  /* TListView table */
+  .lv {
+    width: 100%; border-collapse: collapse;
+    background: #fff; font-size: 12px;
+    border: 1px solid #404040; border-bottom-color: #d0d0d0; border-right-color: #d0d0d0;
+  }
+  .lv thead th {
+    background: #d4d0c8; padding: 2px 6px;
+    text-align: left; font-size: 11px; font-weight: bold;
+    border-right: 1px solid #a0a0a0; border-bottom: 1px solid #808080;
+    white-space: nowrap;
+  }
+  .lv tbody tr { cursor: default; }
+  .lv tbody tr:nth-child(even) { background: #f5f1eb; }
+  .lv tbody tr:hover td { background: #c8dce8; }
+  .lv tbody tr.sel td { background: #0a246a !important; color: #fff; }
+  .lv td {
+    padding: 2px 6px; font-size: 12px;
+    border-bottom: 1px solid #e8e4dc; border-right: 1px solid #ece8e0;
+  }
+
+  /* Form rows */
+  .fr { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .fl { width: 110px; flex-shrink: 0; font-size: 12px; }
+  .fl-sm { width: 80px; flex-shrink: 0; font-size: 12px; }
+
+  /* TEdit */
+  .le {
+    font-size: 12px; padding: 1px 4px;
+    border: 1px solid #404040; border-bottom-color: #d0d0d0; border-right-color: #d0d0d0;
+    background: #fff; outline: none;
+  }
+  .le:focus { outline: 1px dotted #0a246a; }
+  .le-sm { width: 60px; }
+  .le-md { width: 130px; }
+  .le-lg { width: 220px; }
+  .le-pw { font-family: monospace; letter-spacing: 2px; }
+
+  /* TComboBox */
+  .lc {
+    font-size: 12px; padding: 1px 2px;
+    border: 1px solid #404040; border-bottom-color: #d0d0d0; border-right-color: #d0d0d0;
+    background: #fff; cursor: pointer; outline: none;
+  }
+
+  /* TButton */
+  .lb {
+    font-size: 12px; padding: 3px 12px; min-width: 75px;
+    background: linear-gradient(to bottom, #f0ece4, #d8d4cc);
+    border: 2px outset #d0d0c4; cursor: pointer; color: #000;
+  }
+  .lb:hover { background: linear-gradient(to bottom, #faf8f0, #e8e4dc); }
+  .lb:active { border: 2px inset #d0d0c4; background: #c8c4bc; }
+
+  /* TCheckBox / TRadioButton */
+  .cb { display: flex; align-items: center; gap: 5px; margin-bottom: 5px; font-size: 12px; cursor: pointer; }
+  .cb input { cursor: pointer; }
+  .rb { display: flex; align-items: center; gap: 5px; margin-bottom: 5px; font-size: 12px; cursor: pointer; }
+  .rb input { cursor: pointer; }
 
   /* Status badge */
-  .status-ok {
-    display: inline-block;
-    background: #00c000; color: #fff;
-    font-size: 12px; font-weight: bold;
-    padding: 2px 10px;
-    border: 1px outset #008000;
-  }
-  .status-err {
-    display: inline-block;
-    background: #c00000; color: #fff;
-    font-size: 12px; font-weight: bold;
-    padding: 2px 10px;
-    border: 1px outset #800000;
-  }
+  .badge-ok   { display:inline-block; background:#00b000; color:#fff; font-size:11px; font-weight:bold; padding:1px 8px; border:1px outset #007000; }
+  .badge-warn { display:inline-block; background:#c07000; color:#fff; font-size:11px; font-weight:bold; padding:1px 8px; border:1px outset #905000; }
+  .badge-err  { display:inline-block; background:#b00000; color:#fff; font-size:11px; font-weight:bold; padding:1px 8px; border:1px outset #800000; }
+  .badge-off  { display:inline-block; background:#808080; color:#fff; font-size:11px; font-weight:bold; padding:1px 8px; border:1px outset #606060; }
 
-  /* Placeholder hint text */
-  .placeholder-hint {
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    color: #666; font-size: 12px;
-    text-align: center; line-height: 1.6;
-    pointer-events: none;
+  /* Progress / usage bar */
+  .bar-wrap { background: #a8a4a0; border:1px solid #606060; border-bottom-color:#c0bdb8; border-right-color:#c0bdb8; height:14px; flex:1; overflow:hidden; }
+  .bar-fill { height:100%; background:#0a246a; }
+  .bar-fill.bar-warn { background:#c07000; }
+  .bar-fill.bar-crit { background:#b00000; }
+
+  /* Disk bay grid */
+  .disk-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:5px; margin-bottom:8px; }
+  .bay {
+    background:#fff; border:1px solid #404040; border-bottom-color:#d0d0d0; border-right-color:#d0d0d0;
+    padding:5px 6px; cursor:pointer; font-size:11px; min-height:72px;
   }
-  .panel-inner { position: relative; min-height: 300px; }
+  .bay:hover { background:#e8f0f8; }
+  .bay.bay-sel { background:#c8dce8; border:1px inset #6080a0; }
+  .bay.bay-empty { background:#e8e8e8; color:#808080; }
+  .bay-num { font-size:10px; color:#666; margin-bottom:2px; }
+  .bay-model { font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .bay-size  { color:#444; margin:1px 0 3px; }
+  .bay-health { display:flex; align-items:center; gap:4px; }
+  .dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+  .dot-ok   { background:#00c000; }
+  .dot-warn { background:#c08000; }
+  .dot-err  { background:#c00000; }
+  .dot-off  { background:#a0a0a0; }
 
-  /* Checkbox row */
-  .check-row { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
-  .check-row input[type=checkbox] { width: 13px; height: 13px; cursor: pointer; }
-  .check-row label { font-size: 12px; cursor: pointer; }
+  /* Service status tiles */
+  .svc-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:3px; }
+  .svc-item { display:flex; align-items:center; gap:5px; font-size:11px; padding:3px 5px; background:#fff; border:1px inset #c0c0c0; }
 
-  /* Radio row */
-  .radio-row { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
-  .radio-row input[type=radio] { cursor: pointer; }
-  .radio-row label { font-size: 12px; cursor: pointer; }
+  /* Share checkboxes in protocol panels */
+  .share-cb-list { background:#fff; border:1px solid #404040; border-bottom-color:#d0d0d0; border-right-color:#d0d0d0; padding:4px 6px; }
+  .share-cb-row { display:flex; align-items:center; gap:6px; padding:2px 0; border-bottom:1px solid #eee; font-size:12px; }
+  .share-cb-row:last-child { border-bottom:none; }
+  .share-path { color:#666; margin-left:4px; font-size:11px; }
+
+  /* Misc */
+  .note  { font-size:11px; color:#555; margin-left:2px; }
+  .sep   { height:0; border:none; border-top:1px solid #a0a0a0; margin:8px 0; }
+  .brow  { display:flex; gap:4px; margin-top:6px; }
+  .dimmed { opacity:.45; pointer-events:none; }
+  .mono  { font-family:monospace; font-size:11px; }
 
   /* ── Status bar ── */
   .statusbar {
-    height: 20px;
-    background: #d4d0c8;
-    border-top: 1px solid #a0a0a0;
-    display: flex;
-    align-items: center;
-    padding: 0 6px;
-    font-size: 11px;
-    color: #444;
-    flex-shrink: 0;
+    height: 20px; background: #d4d0c8; border-top: 1px solid #a0a0a0;
+    display: flex; align-items: center; padding: 0 6px;
+    font-size: 11px; color: #444; flex-shrink: 0;
   }
-  .statusbar-sep { width: 1px; background: #a0a0a0; height: 14px; margin: 0 8px; }
+  .sb-sep { width:1px; background:#a0a0a0; height:14px; margin:0 8px; }
 </style>
 </head>
 <body>
@@ -253,26 +248,24 @@
   <div class="titlebar">
     <span class="titlebar-title">ImpoSTØR OS Control Panel</span>
     <div class="titlebar-btns">
-      <div class="tbtn" title="Minimise">_</div>
-      <div class="tbtn" title="Maximise">□</div>
-      <div class="tbtn" title="Close">✕</div>
+      <div class="tbtn">_</div><div class="tbtn">□</div><div class="tbtn">✕</div>
     </div>
   </div>
 
   <!-- Menu bar -->
   <div class="menubar">
-    <div class="menu-item" id="menu-nas" tabindex="0">NAS</div>
-    <div class="menu-item" id="menu-connection" tabindex="0">Connection
+    <div class="menu-item" id="menu-nas">NAS</div>
+    <div class="menu-item" id="menu-conn">Connection
       <div class="dropdown">
-        <div class="dd-item" data-panel="summary" data-nas="NAS 1">NAS 1</div>
-        <div class="dd-item" data-panel="summary" data-nas="NAS 2">NAS 2</div>
-        <div class="dd-item" data-panel="summary" data-nas="NAS 3">NAS 3</div>
+        <div class="dd-item" data-nas="nas-1">NAS 1</div>
+        <div class="dd-item" data-nas="nas-2">NAS 2</div>
+        <div class="dd-item" data-nas="nas-3">NAS 3</div>
         <div class="dd-sep"></div>
         <div class="dd-item">Connection editor…</div>
         <div class="dd-item">Preferences…</div>
       </div>
     </div>
-    <div class="menu-item" id="menu-help" tabindex="0">Help</div>
+    <div class="menu-item" id="menu-help">Help</div>
   </div>
 
   <!-- Main body -->
@@ -280,9 +273,7 @@
 
     <!-- Sidebar -->
     <div class="sidebar">
-      <div class="sidebar-topbar">
-        <div class="icon-btn" title="Back / Refresh">↺</div>
-      </div>
+      <div class="sidebar-topbar"><div class="icon-btn" title="Refresh">↺</div></div>
       <button class="nav-btn active" data-panel="summary">Summary</button>
       <button class="nav-btn" data-panel="shares">Shares</button>
       <button class="nav-btn" data-panel="disks">Disks</button>
@@ -291,200 +282,491 @@
       <button class="nav-btn" data-panel="sftp">SFTP</button>
       <button class="nav-btn" data-panel="ftp">FTP</button>
       <button class="nav-btn" data-panel="minio">Minio (S3)</button>
-      <button class="nav-btn" data-panel="virtual-layout">Virtual layout</button>
+      <button class="nav-btn" data-panel="virt">Virtual layout</button>
       <button class="nav-btn" data-panel="raid">RAID</button>
-      <button class="nav-btn" data-panel="data-integrity">Data integrity</button>
+      <button class="nav-btn" data-panel="integrity">Data integrity</button>
       <button class="nav-btn" data-panel="backups">Backups</button>
       <button class="nav-btn" data-panel="users">Users</button>
-      <button class="nav-btn" data-panel="internet-access">Internet access</button>
+      <button class="nav-btn" data-panel="internet">Internet access</button>
     </div>
 
-    <!-- Content pane -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!--  PANELS                                                    -->
+    <!-- ══════════════════════════════════════════════════════════ -->
     <div class="content">
 
-      <!-- Summary -->
+      <!-- ── SUMMARY ── -->
       <div class="panel active" id="panel-summary">
-        <div class="form-row">
-          <span class="form-label">NAS name:</span>
-          <input class="laz-input" type="text" id="nasName" value="nas-1">
+        <div class="fr">
+          <span class="fl">NAS name:</span>
+          <input class="le le-md" id="nasName" value="nas-1">
+          &nbsp;&nbsp;
+          <span class="fl-sm">Status:</span>
+          <span class="badge-ok">OK</span>
         </div>
-        <div class="form-row">
-          <span class="form-label">Status:</span>
-          <span class="status-ok" id="statusBadge">OK</span>
+        <hr class="sep">
+
+        <div class="gb">
+          <span class="gb-title">Storage</span>
+          <div class="fr" style="margin-bottom:2px;">
+            <span class="fl">Pool (MergerFS):</span>
+            <div class="bar-wrap"><div class="bar-fill" style="width:43%"></div></div>
+            <span style="font-size:11px;margin-left:6px;white-space:nowrap;">6.2 TB / 14.5 TB &nbsp;(43%)</span>
+          </div>
+          <div class="fr" style="margin-bottom:0;">
+            <span class="fl">Free:</span>
+            <span style="font-size:12px;">8.3 TB</span>
+            &nbsp;&nbsp;
+            <span class="fl-sm" style="width:auto;">RAID state:</span>
+            &nbsp;<span class="badge-ok" style="font-size:10px;">CLEAN</span>
+          </div>
         </div>
-        <div class="panel-inner" style="margin-top:20px;">
-          <div class="placeholder-hint">
-            This is a main health/system stats/system info overview screen.<br>
-            It will contain:<br>
-            - basic system stats (name, overall health, usable amount of space)<br>
-            - status of each individual file sharing service (and maybe the number of shares exposed)<br>
-            - backup/data integrity status<br>
-            - current CPU, disk, RAM, disk I/O, network I/O consumption/stats
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div class="gb">
+            <span class="gb-title">System</span>
+            <div class="fr"><span class="fl">Uptime:</span><span style="font-size:12px;">14 days, 6 h 22 m</span></div>
+            <div class="fr"><span class="fl">Firmware:</span><span style="font-size:12px;">1.2.3</span></div>
+            <div class="fr">
+              <span class="fl">CPU:</span>
+              <div class="bar-wrap" style="max-width:80px;"><div class="bar-fill" style="width:12%"></div></div>
+              <span style="font-size:11px;margin-left:4px;">12%</span>
+            </div>
+            <div class="fr">
+              <span class="fl">RAM:</span>
+              <div class="bar-wrap" style="max-width:80px;"><div class="bar-fill" style="width:45%"></div></div>
+              <span style="font-size:11px;margin-left:4px;">1.8 / 4.0 GB</span>
+            </div>
+            <div class="fr"><span class="fl">Load avg:</span><span style="font-size:12px;">0.24, 0.18, 0.12</span></div>
+          </div>
+          <div class="gb">
+            <span class="gb-title">Services</span>
+            <div class="svc-grid">
+              <div class="svc-item"><span class="dot dot-ok"></span>NFS</div>
+              <div class="svc-item"><span class="dot dot-ok"></span>Samba</div>
+              <div class="svc-item"><span class="dot dot-ok"></span>SFTP</div>
+              <div class="svc-item"><span class="dot dot-off"></span>FTP</div>
+              <div class="svc-item"><span class="dot dot-off"></span>Minio</div>
+              <div class="svc-item"><span class="dot dot-ok"></span>Backups</div>
+            </div>
+            <hr class="sep" style="margin:6px 0;">
+            <div class="fr" style="margin-bottom:2px;"><span class="fl">Last backup:</span><span style="font-size:12px;">2024-01-14 03:00 &nbsp;<span class="badge-ok" style="font-size:10px;">OK</span></span></div>
+            <div class="fr" style="margin-bottom:0;"><span class="fl">Last scrub:</span><span style="font-size:12px;">2024-01-07 02:00 &nbsp;<span class="badge-ok" style="font-size:10px;">PASSED</span></span></div>
           </div>
         </div>
       </div>
 
-      <!-- Shares -->
+      <!-- ── SHARES ── -->
       <div class="panel" id="panel-shares">
-        <div class="panel-inner">
-          <div class="placeholder-hint">
-            List of shared folders goes here.<br>
-            Add, remove, and configure shares exposed over SMB, NFS, SFTP.
-          </div>
+        <table class="lv" id="sharesTable">
+          <thead>
+            <tr>
+              <th style="width:110px;">Name</th>
+              <th>Path</th>
+              <th style="width:40px;text-align:center;">NFS</th>
+              <th style="width:40px;text-align:center;">SMB</th>
+              <th style="width:40px;text-align:center;">SFTP</th>
+              <th style="width:70px;text-align:right;">Size</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>homes</td><td class="mono">/pool/homes</td><td style="text-align:center;">✓</td><td style="text-align:center;">✓</td><td style="text-align:center;">✓</td><td style="text-align:right;">120 GB</td></tr>
+            <tr><td>media</td><td class="mono">/pool/media</td><td style="text-align:center;">✓</td><td style="text-align:center;">✓</td><td style="text-align:center;"></td><td style="text-align:right;">5.2 TB</td></tr>
+            <tr><td>backups</td><td class="mono">/pool/backups</td><td style="text-align:center;"></td><td style="text-align:center;">✓</td><td style="text-align:center;"></td><td style="text-align:right;">800 GB</td></tr>
+            <tr><td>documents</td><td class="mono">/pool/documents</td><td style="text-align:center;"></td><td style="text-align:center;">✓</td><td style="text-align:center;">✓</td><td style="text-align:right;">45 GB</td></tr>
+          </tbody>
+        </table>
+        <div class="brow">
+          <button class="lb">Add…</button>
+          <button class="lb" id="shareRemoveBtn" disabled>Remove</button>
+          <button class="lb" id="shareEditBtn" disabled>Edit…</button>
         </div>
       </div>
 
-      <!-- Disks -->
+      <!-- ── DISKS ── -->
       <div class="panel" id="panel-disks">
-        <div class="panel-inner">
-          <div class="placeholder-hint">
-            An icon(?) view of disks and their partitions goes here.
+        <div class="disk-grid">
+          <div class="bay" data-bay="1">
+            <div class="bay-num">Bay 1</div>
+            <div class="bay-model">WD Red Plus 4TB</div>
+            <div class="bay-size">3.64 TiB</div>
+            <div class="bay-health"><span class="dot dot-ok"></span>Healthy &nbsp;·&nbsp; 34°C</div>
           </div>
+          <div class="bay" data-bay="2">
+            <div class="bay-num">Bay 2</div>
+            <div class="bay-model">WD Red Plus 4TB</div>
+            <div class="bay-size">3.64 TiB</div>
+            <div class="bay-health"><span class="dot dot-ok"></span>Healthy &nbsp;·&nbsp; 36°C</div>
+          </div>
+          <div class="bay" data-bay="3">
+            <div class="bay-num">Bay 3</div>
+            <div class="bay-model">WD Red Plus 4TB</div>
+            <div class="bay-size">3.64 TiB</div>
+            <div class="bay-health"><span class="dot dot-ok"></span>Healthy &nbsp;·&nbsp; 35°C</div>
+          </div>
+          <div class="bay" data-bay="4">
+            <div class="bay-num">Bay 4</div>
+            <div class="bay-model">Seagate IronWolf 4TB</div>
+            <div class="bay-size">3.64 TiB</div>
+            <div class="bay-health"><span class="dot dot-ok"></span>Healthy &nbsp;·&nbsp; 38°C</div>
+          </div>
+          <div class="bay" data-bay="5">
+            <div class="bay-num">Bay 5</div>
+            <div class="bay-model">Seagate IronWolf 4TB</div>
+            <div class="bay-size">3.64 TiB</div>
+            <div class="bay-health"><span class="dot dot-warn"></span>Warning &nbsp;·&nbsp; 51°C</div>
+          </div>
+          <div class="bay bay-empty" data-bay="6">
+            <div class="bay-num">Bay 6</div>
+            <div class="bay-model" style="color:#a0a0a0;">(empty)</div>
+          </div>
+        </div>
+
+        <div class="gb" id="diskDetail" style="display:none;">
+          <span class="gb-title" id="diskDetailTitle">Bay —</span>
+          <div style="font-size:12px;" id="diskDetailContent"></div>
         </div>
       </div>
 
-      <!-- NFS -->
+      <!-- ── NFS ── -->
       <div class="panel" id="panel-nfs">
-        <div class="check-row">
-          <input type="checkbox" id="enableNFS">
-          <label for="enableNFS">Enable NFS</label>
-        </div>
-        <div class="panel-inner">
-          <div class="placeholder-hint">
-            Protocol-specific settings go here, as well as a selection<br>
-            of which shares are to be exposed over this protocol.
+        <label class="cb"><input type="checkbox" id="nfsEnable" onchange="toggleProto('nfs')"> Enable NFS</label>
+        <hr class="sep">
+        <div id="nfsBody">
+          <div class="gb">
+            <span class="gb-title">Protocol</span>
+            <label class="rb"><input type="radio" name="nfsVer" value="3"> NFSv3</label>
+            <label class="rb"><input type="radio" name="nfsVer" value="4" checked> NFSv4</label>
+            <label class="rb"><input type="radio" name="nfsVer" value="41"> NFSv4.1</label>
+            <hr class="sep">
+            <div class="fr"><span class="fl">Port:</span><input class="le le-sm" value="2049"></div>
+          </div>
+          <div class="gb">
+            <span class="gb-title">Exported shares</span>
+            <div class="share-cb-list">
+              <div class="share-cb-row"><label class="cb" style="margin:0;"><input type="checkbox" checked> homes</label><span class="share-path">/pool/homes</span></div>
+              <div class="share-cb-row"><label class="cb" style="margin:0;"><input type="checkbox" checked> media</label><span class="share-path">/pool/media</span></div>
+              <div class="share-cb-row"><label class="cb" style="margin:0;"><input type="checkbox"> backups</label><span class="share-path">/pool/backups</span></div>
+              <div class="share-cb-row"><label class="cb" style="margin:0;"><input type="checkbox"> documents</label><span class="share-path">/pool/documents</span></div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Samba -->
+      <!-- ── SAMBA ── -->
       <div class="panel" id="panel-samba">
-        <div class="check-row">
-          <input type="checkbox" id="enableSamba">
-          <label for="enableSamba">Enable Samba (SMB)</label>
-        </div>
-        <div class="panel-inner">
-          <div class="placeholder-hint">
-            Protocol-specific settings go here, as well as a selection<br>
-            of which shares are to be exposed over this protocol.
+        <label class="cb"><input type="checkbox" id="sambaEnable" onchange="toggleProto('samba')"> Enable Samba (SMB)</label>
+        <hr class="sep">
+        <div id="sambaBody">
+          <div class="gb">
+            <span class="gb-title">Settings</span>
+            <div class="fr"><span class="fl">Workgroup:</span><input class="le le-md" value="WORKGROUP"></div>
+            <label class="cb"><input type="checkbox" checked> Allow guest access (read-only)</label>
+            <label class="cb"><input type="checkbox"> Enable NetBIOS name service</label>
+          </div>
+          <div class="gb">
+            <span class="gb-title">Exported shares</span>
+            <div class="share-cb-list">
+              <div class="share-cb-row"><label class="cb" style="margin:0;"><input type="checkbox" checked> homes</label><span class="share-path">/pool/homes</span></div>
+              <div class="share-cb-row"><label class="cb" style="margin:0;"><input type="checkbox" checked> media</label><span class="share-path">/pool/media</span></div>
+              <div class="share-cb-row"><label class="cb" style="margin:0;"><input type="checkbox" checked> backups</label><span class="share-path">/pool/backups</span></div>
+              <div class="share-cb-row"><label class="cb" style="margin:0;"><input type="checkbox" checked> documents</label><span class="share-path">/pool/documents</span></div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- SFTP -->
+      <!-- ── SFTP ── -->
       <div class="panel" id="panel-sftp">
-        <div class="check-row">
-          <input type="checkbox" id="enableSFTP" checked>
-          <label for="enableSFTP">Enable SFTP</label>
-        </div>
-        <div class="panel-inner">
-          <div class="placeholder-hint">
-            Protocol-specific settings go here, as well as a selection<br>
-            of which shares are to be exposed over this protocol.
+        <label class="cb"><input type="checkbox" id="sftpEnable" onchange="toggleProto('sftp')" checked> Enable SFTP</label>
+        <hr class="sep">
+        <div id="sftpBody">
+          <div class="gb">
+            <span class="gb-title">Settings</span>
+            <div class="fr"><span class="fl">Port:</span><input class="le le-sm" value="22"></div>
+            <label class="cb"><input type="checkbox" checked> Restrict users to their share (chroot)</label>
+            <label class="cb"><input type="checkbox"> Allow password authentication (in addition to keys)</label>
+          </div>
+          <div class="gb">
+            <span class="gb-title">Accessible shares</span>
+            <div class="share-cb-list">
+              <div class="share-cb-row"><label class="cb" style="margin:0;"><input type="checkbox" checked> homes</label><span class="share-path">/pool/homes</span></div>
+              <div class="share-cb-row"><label class="cb" style="margin:0;"><input type="checkbox"> media</label><span class="share-path">/pool/media</span></div>
+              <div class="share-cb-row"><label class="cb" style="margin:0;"><input type="checkbox"> backups</label><span class="share-path">/pool/backups</span></div>
+              <div class="share-cb-row"><label class="cb" style="margin:0;"><input type="checkbox" checked> documents</label><span class="share-path">/pool/documents</span></div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- FTP -->
+      <!-- ── FTP ── -->
       <div class="panel" id="panel-ftp">
-        <div class="check-row">
-          <input type="checkbox" id="enableFTP">
-          <label for="enableFTP">Enable FTP</label>
-        </div>
-        <div class="panel-inner">
-          <div class="placeholder-hint">
-            Protocol-specific settings go here, as well as a selection<br>
-            of which shares are to be exposed over this protocol.
+        <label class="cb"><input type="checkbox" id="ftpEnable" onchange="toggleProto('ftp')"> Enable FTP</label>
+        <hr class="sep">
+        <div id="ftpBody">
+          <div class="gb">
+            <span class="gb-title">Settings</span>
+            <div class="fr"><span class="fl">Port:</span><input class="le le-sm" value="21"></div>
+            <div class="fr">
+              <span class="fl">Passive range:</span>
+              <input class="le le-sm" value="50000"> &nbsp;–&nbsp; <input class="le le-sm" value="51000">
+            </div>
+            <label class="cb"><input type="checkbox"> Allow anonymous access <span class="note">(not recommended)</span></label>
+          </div>
+          <div class="gb">
+            <span class="gb-title">Accessible shares</span>
+            <div class="share-cb-list">
+              <div class="share-cb-row"><label class="cb" style="margin:0;"><input type="checkbox"> homes</label><span class="share-path">/pool/homes</span></div>
+              <div class="share-cb-row"><label class="cb" style="margin:0;"><input type="checkbox"> media</label><span class="share-path">/pool/media</span></div>
+              <div class="share-cb-row"><label class="cb" style="margin:0;"><input type="checkbox"> backups</label><span class="share-path">/pool/backups</span></div>
+              <div class="share-cb-row"><label class="cb" style="margin:0;"><input type="checkbox"> documents</label><span class="share-path">/pool/documents</span></div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Minio -->
+      <!-- ── MINIO ── -->
       <div class="panel" id="panel-minio">
-        <div class="check-row">
-          <input type="checkbox" id="enableMinio">
-          <label for="enableMinio">Enable Minio (S3-compatible storage)</label>
-        </div>
-        <div class="panel-inner">
-          <div class="placeholder-hint">
-            Minio / S3-compatible object storage configuration goes here.
+        <label class="cb"><input type="checkbox" id="minioEnable" onchange="toggleProto('minio')"> Enable Minio (S3-compatible storage)</label>
+        <hr class="sep">
+        <div id="minioBody">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div class="gb">
+              <span class="gb-title">Endpoint</span>
+              <div class="fr"><span class="fl-sm">API port:</span><input class="le le-sm" value="9000"></div>
+              <div class="fr"><span class="fl-sm">Console:</span><input class="le le-sm" value="9001"></div>
+              <div class="fr"><span class="fl-sm">URL:</span><span class="mono">http://nas-1:9000</span></div>
+            </div>
+            <div class="gb">
+              <span class="gb-title">Credentials</span>
+              <div class="fr"><span class="fl-sm">Access key:</span><input class="le le-md" value="minioadmin"></div>
+              <div class="fr"><span class="fl-sm">Secret key:</span><input class="le le-md le-pw" type="password" value="minioadmin"></div>
+            </div>
+          </div>
+          <div class="gb">
+            <span class="gb-title">Bucket → share mapping</span>
+            <table class="lv" style="margin-bottom:6px;">
+              <thead><tr><th>Bucket name</th><th>Share</th><th>Quota</th></tr></thead>
+              <tbody>
+                <tr><td>media</td><td class="mono">/pool/media</td><td>—</td></tr>
+                <tr><td>backups</td><td class="mono">/pool/backups</td><td>—</td></tr>
+              </tbody>
+            </table>
+            <div class="brow"><button class="lb">Add…</button><button class="lb">Remove</button></div>
           </div>
         </div>
       </div>
 
-      <!-- Virtual layout -->
-      <div class="panel" id="panel-virtual-layout">
-        <div class="panel-inner">
-          <div class="placeholder-hint">
-            MergerFS configuration goes here (configure merge mode,<br>
-            writable directories, write mode — see MergerFS README).
+      <!-- ── VIRTUAL LAYOUT (MergerFS) ── -->
+      <div class="panel" id="panel-virt">
+        <div class="gb">
+          <span class="gb-title">MergerFS pool</span>
+          <div class="fr"><span class="fl">Mount point:</span><span class="mono">/pool</span>&nbsp;<span class="note">(read-only — change in fstab)</span></div>
+          <div class="fr">
+            <span class="fl">Merge policy:</span>
+            <select class="lc">
+              <option>mfs — most free space</option>
+              <option>ff — first found</option>
+              <option>lfs — least free space</option>
+              <option>rand — random</option>
+              <option>newest — most recently modified</option>
+            </select>
+          </div>
+          <div class="fr">
+            <span class="fl">Create policy:</span>
+            <select class="lc">
+              <option>pfrd — path-first, random drive</option>
+              <option>epmfs — existing path, most free</option>
+              <option>mspmfs — most space per path</option>
+            </select>
+          </div>
+        </div>
+        <div class="gb">
+          <span class="gb-title">Source drives</span>
+          <div class="share-cb-list">
+            <div class="share-cb-row"><label class="cb" style="margin:0;"><input type="checkbox" checked> /mnt/disk1</label><span class="share-path">WD Red Plus 4TB &nbsp;·&nbsp; 3.64 TiB</span></div>
+            <div class="share-cb-row"><label class="cb" style="margin:0;"><input type="checkbox" checked> /mnt/disk2</label><span class="share-path">WD Red Plus 4TB &nbsp;·&nbsp; 3.64 TiB</span></div>
+            <div class="share-cb-row"><label class="cb" style="margin:0;"><input type="checkbox" checked> /mnt/disk3</label><span class="share-path">WD Red Plus 4TB &nbsp;·&nbsp; 3.64 TiB</span></div>
+            <div class="share-cb-row"><label class="cb" style="margin:0;"><input type="checkbox" checked> /mnt/disk4</label><span class="share-path">Seagate IronWolf 4TB &nbsp;·&nbsp; 3.64 TiB</span></div>
+            <div class="share-cb-row"><label class="cb" style="margin:0;"><input type="checkbox" checked> /mnt/disk5</label><span class="share-path">Seagate IronWolf 4TB &nbsp;·&nbsp; 3.64 TiB</span></div>
+            <div class="share-cb-row"><label class="cb" style="margin:0;"><input type="checkbox" disabled> /mnt/disk6</label><span class="share-path">(empty)</span></div>
           </div>
         </div>
       </div>
 
-      <!-- RAID -->
+      <!-- ── RAID ── -->
       <div class="panel" id="panel-raid">
-        <div class="panel-inner">
-          <div class="placeholder-hint">
-            RAID array configuration and status goes here.
+        <div class="gb">
+          <span class="gb-title">Array status</span>
+          <div class="fr"><span class="fl">Array name:</span><span class="mono">md0</span></div>
+          <div class="fr">
+            <span class="fl">RAID level:</span>
+            <select class="lc"><option>RAID 5</option><option>RAID 1</option><option>RAID 6</option><option>RAID 10</option></select>
           </div>
+          <div class="fr"><span class="fl">State:</span><span class="badge-ok">CLEAN</span></div>
+          <div class="fr"><span class="fl">Raw size:</span><span style="font-size:12px;">18.2 TiB &nbsp;→&nbsp; 14.5 TiB usable (RAID 5)</span></div>
+          <div class="fr"><span class="fl">Devices:</span><span style="font-size:12px;">5 active &nbsp;/&nbsp; 0 failed &nbsp;/&nbsp; 1 empty slot</span></div>
+          <div class="fr"><span class="fl">Sync status:</span><span style="font-size:12px;">idle</span></div>
+        </div>
+        <div class="gb">
+          <span class="gb-title">Member drives</span>
+          <table class="lv">
+            <thead><tr><th style="width:70px;">Device</th><th>Model</th><th style="width:70px;">Size</th><th style="width:80px;">State</th></tr></thead>
+            <tbody>
+              <tr><td class="mono">/dev/sda</td><td>WD Red Plus 4TB</td><td>3.64 TiB</td><td><span class="badge-ok" style="font-size:10px;">active</span></td></tr>
+              <tr><td class="mono">/dev/sdb</td><td>WD Red Plus 4TB</td><td>3.64 TiB</td><td><span class="badge-ok" style="font-size:10px;">active</span></td></tr>
+              <tr><td class="mono">/dev/sdc</td><td>WD Red Plus 4TB</td><td>3.64 TiB</td><td><span class="badge-ok" style="font-size:10px;">active</span></td></tr>
+              <tr><td class="mono">/dev/sdd</td><td>Seagate IronWolf 4TB</td><td>3.64 TiB</td><td><span class="badge-ok" style="font-size:10px;">active</span></td></tr>
+              <tr><td class="mono">/dev/sde</td><td>Seagate IronWolf 4TB</td><td>3.64 TiB</td><td><span class="badge-ok" style="font-size:10px;">active</span></td></tr>
+              <tr><td class="mono">—</td><td style="color:#808080;">(empty slot)</td><td>—</td><td>—</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
-      <!-- Data integrity -->
-      <div class="panel" id="panel-data-integrity">
-        <div class="panel-inner">
-          <div class="placeholder-hint">
-            Data integrity checks (scrub schedules, parity verification) go here.
+      <!-- ── DATA INTEGRITY ── -->
+      <div class="panel" id="panel-integrity">
+        <div class="gb">
+          <span class="gb-title">Scheduled scrubs</span>
+          <label class="cb"><input type="checkbox" checked> Enable scheduled data scrubs</label>
+          <hr class="sep">
+          <div class="fr">
+            <span class="fl">Frequency:</span>
+            <label class="rb" style="margin:0 12px 0 0;"><input type="radio" name="scrubFreq" checked> Weekly</label>
+            <label class="rb" style="margin:0;"><input type="radio" name="scrubFreq"> Monthly</label>
           </div>
+          <div class="fr">
+            <span class="fl">Day:</span>
+            <select class="lc"><option>Sunday</option><option>Monday</option><option>Saturday</option></select>
+            &nbsp;&nbsp;
+            <span class="fl-sm" style="width:auto;">Time:</span>&nbsp;
+            <input class="le le-sm" value="02:00">
+          </div>
+        </div>
+        <div class="gb">
+          <span class="gb-title">Last scrub result</span>
+          <div class="fr"><span class="fl">Date:</span><span style="font-size:12px;">2024-01-07 &nbsp;02:00 – 06:32</span></div>
+          <div class="fr"><span class="fl">Duration:</span><span style="font-size:12px;">4 h 32 m</span></div>
+          <div class="fr"><span class="fl">Result:</span><span class="badge-ok">PASSED</span></div>
+          <div class="fr"><span class="fl">Errors:</span><span style="font-size:12px;">0</span></div>
+          <hr class="sep">
+          <div class="brow"><button class="lb">Run scrub now</button></div>
         </div>
       </div>
 
-      <!-- Backups -->
+      <!-- ── BACKUPS ── -->
       <div class="panel" id="panel-backups">
-        <div class="check-row">
-          <input type="checkbox" id="enableBackups" checked>
-          <label for="enableBackups">Enable Backups</label>
-        </div>
-        <div style="font-size:11px; color:#444; margin-bottom:12px; margin-left:20px;">
-          (No, these are not optional — deal with it)
-        </div>
-        <div class="panel-inner">
-          <div class="placeholder-hint">
-            Backup configuration and triggering backup jobs/viewing backup job stats goes here.<br>
-            Exports to external media like tape too.<br>
-            Backup schedules too.
+        <label class="cb"><input type="checkbox" checked> Enable Backups</label>
+        <div class="note" style="margin-left:20px;margin-bottom:8px;">(No, these are not optional — deal with it)</div>
+        <hr class="sep">
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div>
+            <div class="gb">
+              <span class="gb-title">Destination</span>
+              <label class="rb"><input type="radio" name="backupDest" checked> Local drive</label>
+              <div class="fr" style="margin-left:18px;margin-bottom:4px;"><span class="fl-sm" style="width:50px;">Path:</span><input class="le" style="width:130px;" value="/mnt/backup-drive"></div>
+              <label class="rb"><input type="radio" name="backupDest"> Remote (rsync / SSH)</label>
+              <label class="rb"><input type="radio" name="backupDest"> S3 / object storage</label>
+              <label class="rb"><input type="radio" name="backupDest"> Tape</label>
+            </div>
+            <div class="gb">
+              <span class="gb-title">Schedule</span>
+              <label class="rb"><input type="radio" name="backupSched"> Daily &nbsp;<input class="le le-sm" value="02:00" style="margin-left:4px;"></label>
+              <label class="rb"><input type="radio" name="backupSched" checked> Weekly &nbsp;
+                <select class="lc" style="margin-left:4px;"><option>Sunday</option><option>Saturday</option></select>
+                &nbsp;<input class="le le-sm" value="03:00">
+              </label>
+              <label class="rb"><input type="radio" name="backupSched"> Monthly (1st of month)</label>
+              <hr class="sep">
+              <div class="fr"><span class="fl-sm">Retention:</span><input class="le le-sm" value="30">&nbsp;days</div>
+            </div>
+          </div>
+          <div>
+            <div class="gb">
+              <span class="gb-title">Last backup</span>
+              <div class="fr"><span class="fl-sm">Date:</span><span style="font-size:12px;">2024-01-14 03:00</span></div>
+              <div class="fr"><span class="fl-sm">Duration:</span><span style="font-size:12px;">1 h 12 m</span></div>
+              <div class="fr"><span class="fl-sm">Result:</span><span class="badge-ok">OK</span></div>
+              <div class="fr"><span class="fl-sm">Size:</span><span style="font-size:12px;">42.3 GB</span></div>
+              <hr class="sep">
+              <div class="brow"><button class="lb">Run backup now</button></div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Users -->
+      <!-- ── USERS ── -->
       <div class="panel" id="panel-users">
-        <div style="margin-bottom: 10px;">
-          <div class="radio-row">
-            <input type="radio" name="userMode" id="singleUser" checked>
-            <label for="singleUser">Single-user mode</label>
-          </div>
-          <div class="radio-row">
-            <input type="radio" name="userMode" id="multiUser">
-            <label for="multiUser">Multi-user (family) mode</label>
-          </div>
+        <label class="rb"><input type="radio" name="userMode" id="radioSingle" checked onchange="toggleUserMode()"> Single-user mode</label>
+        <label class="rb"><input type="radio" name="userMode" id="radioMulti" onchange="toggleUserMode()"> Multi-user (family) mode</label>
+        <hr class="sep">
+
+        <div id="singleUserInfo" class="gb">
+          <span class="gb-title">Single-user mode</span>
+          <p style="font-size:12px;line-height:1.5;">
+            All shares are accessible by a single administrator account.<br>
+            No per-user access controls are applied.<br>
+            Suitable for personal use or a single household member.
+          </p>
+          <hr class="sep">
+          <div class="fr"><span class="fl">Admin password:</span><input class="le le-md le-pw" type="password" value="password"></div>
+          <div class="brow"><button class="lb">Change password…</button></div>
         </div>
-        <div class="panel-inner">
-          <div class="placeholder-hint">
-            User access control goes here.<br>
-            The intended use case is family or very small business,<br>
-            so UI design will reflect that.
+
+        <div id="multiUserInfo" style="display:none;">
+          <table class="lv" id="usersTable" style="margin-bottom:6px;">
+            <thead>
+              <tr><th style="width:100px;">Username</th><th>Full name</th><th style="width:70px;">Role</th><th style="width:140px;">Last login</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>admin</strong></td><td>Administrator</td><td>Admin</td><td>2024-01-14 09:23</td></tr>
+              <tr><td>alice</td><td>Alice Smith</td><td>User</td><td>2024-01-13 18:42</td></tr>
+              <tr><td>bob</td><td>Bob Jones</td><td>User</td><td>2024-01-10 20:15</td></tr>
+            </tbody>
+          </table>
+          <div class="brow">
+            <button class="lb">Add user…</button>
+            <button class="lb">Remove</button>
+            <button class="lb">Edit…</button>
           </div>
         </div>
       </div>
 
-      <!-- Internet access -->
-      <div class="panel" id="panel-internet-access">
-        <div class="panel-inner">
-          <div class="placeholder-hint">
-            Internet / remote access configuration goes here<br>
-            (port forwarding, DDNS, VPN, Tailscale, etc.).
+      <!-- ── INTERNET ACCESS ── -->
+      <div class="panel" id="panel-internet">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div>
+            <div class="gb">
+              <span class="gb-title">Tailscale</span>
+              <label class="cb"><input type="checkbox" id="tailscaleEnable"> Enable Tailscale</label>
+              <div class="fr"><span class="fl-sm">Status:</span><span class="badge-off">Not connected</span></div>
+              <div class="fr"><span class="fl-sm">Auth key:</span><input class="le le-lg" placeholder="tskey-auth-…"></div>
+              <div class="brow"><button class="lb">Connect</button></div>
+            </div>
+            <div class="gb">
+              <span class="gb-title">Dynamic DNS</span>
+              <label class="cb"><input type="checkbox"> Enable DDNS</label>
+              <div class="fr">
+                <span class="fl-sm">Provider:</span>
+                <select class="lc"><option>DuckDNS</option><option>No-IP</option><option>Dynu</option></select>
+              </div>
+              <div class="fr"><span class="fl-sm">Hostname:</span><input class="le" style="width:100px;" value="my-nas"><span style="font-size:12px;">.duckdns.org</span></div>
+              <div class="fr"><span class="fl-sm">Token:</span><input class="le le-lg" type="password" value="mytoken"></div>
+            </div>
+          </div>
+          <div>
+            <div class="gb">
+              <span class="gb-title">Port forwarding <span class="note">(on your router)</span></span>
+              <table class="lv" style="margin-bottom:6px;">
+                <thead><tr><th>Service</th><th style="width:80px;">External</th><th style="width:80px;">Internal</th></tr></thead>
+                <tbody>
+                  <tr><td>HTTP</td><td>80</td><td>8080</td></tr>
+                  <tr><td>HTTPS</td><td>443</td><td>8443</td></tr>
+                </tbody>
+              </table>
+              <div class="brow"><button class="lb">Add rule…</button><button class="lb">Remove</button></div>
+            </div>
           </div>
         </div>
       </div>
@@ -495,12 +777,11 @@
   <!-- Status bar -->
   <div class="statusbar">
     <span id="sbConn">Connected: nas-1 (192.168.1.10)</span>
-    <div class="statusbar-sep"></div>
+    <div class="sb-sep"></div>
     <span id="sbPanel">Summary</span>
   </div>
 
 </div><!-- /window -->
-
 <script>
   // ── Sidebar navigation ──
   const navBtns = document.querySelectorAll('.nav-btn');
@@ -513,38 +794,114 @@
     sbPanel.textContent = label || id;
   }
 
-  navBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      activatePanel(btn.dataset.panel, btn.textContent.trim());
-    });
-  });
+  navBtns.forEach(btn => btn.addEventListener('click', () =>
+    activatePanel(btn.dataset.panel, btn.textContent.trim())
+  ));
 
   // ── Menu dropdowns ──
   const menuItems = document.querySelectorAll('.menu-item');
   menuItems.forEach(item => {
     item.addEventListener('click', e => {
-      const wasOpen = item.classList.contains('open');
+      const was = item.classList.contains('open');
       menuItems.forEach(m => m.classList.remove('open'));
-      if (!wasOpen) item.classList.add('open');
+      if (!was) item.classList.add('open');
       e.stopPropagation();
     });
   });
   document.addEventListener('click', () => menuItems.forEach(m => m.classList.remove('open')));
+  document.querySelectorAll('.dropdown').forEach(dd => dd.addEventListener('click', e => e.stopPropagation()));
 
-  // ── Connection menu: switch NAS ──
+  // ── Connection switching ──
   document.querySelectorAll('.dd-item[data-nas]').forEach(item => {
     item.addEventListener('click', () => {
       const nas = item.dataset.nas;
-      document.getElementById('nasName').value = nas.toLowerCase().replace(' ', '-');
-      document.getElementById('sbConn').textContent = `Connected: ${nas}`;
+      document.getElementById('nasName').value = nas;
+      document.getElementById('sbConn').textContent = 'Connected: ' + nas + ' (192.168.1.10)';
       activatePanel('summary', 'Summary');
     });
   });
 
-  // ── Prevent menu-bar click bubbling to close on dd-item ──
-  document.querySelectorAll('.dropdown').forEach(dd => {
-    dd.addEventListener('click', e => e.stopPropagation());
+  // ── Protocol enable/disable ──
+  function toggleProto(name) {
+    const cb   = document.getElementById(name + 'Enable');
+    const body = document.getElementById(name + 'Body');
+    if (body) body.classList.toggle('dimmed', !cb.checked);
+  }
+  // Initialise states
+  ['nfs','samba','ftp','minio'].forEach(n => {
+    const cb = document.getElementById(n + 'Enable');
+    if (cb) toggleProto(n);
   });
+
+  // ── Disk bay selection ──
+  const diskDetail      = document.getElementById('diskDetail');
+  const diskDetailTitle = document.getElementById('diskDetailTitle');
+  const diskDetailContent = document.getElementById('diskDetailContent');
+  const bayData = {
+    1: { dev:'/dev/sda', model:'WD Red Plus 4TB (WD40EFAX)', serial:'WD-WCC7K3NX0123', temp:'34°C', smart:'PASSED',
+         parts:[{name:'sda1',fs:'ext4',size:'3.63 TiB',mount:'/mnt/disk1'},{name:'sda2',fs:'swap',size:'4 GiB',mount:'[SWAP]'}] },
+    2: { dev:'/dev/sdb', model:'WD Red Plus 4TB (WD40EFAX)', serial:'WD-WCC7K3NY0456', temp:'36°C', smart:'PASSED',
+         parts:[{name:'sdb1',fs:'ext4',size:'3.63 TiB',mount:'/mnt/disk2'},{name:'sdb2',fs:'swap',size:'4 GiB',mount:'[SWAP]'}] },
+    3: { dev:'/dev/sdc', model:'WD Red Plus 4TB (WD40EFAX)', serial:'WD-WCC7K3NZ0789', temp:'35°C', smart:'PASSED',
+         parts:[{name:'sdc1',fs:'ext4',size:'3.63 TiB',mount:'/mnt/disk3'},{name:'sdc2',fs:'swap',size:'4 GiB',mount:'[SWAP]'}] },
+    4: { dev:'/dev/sdd', model:'Seagate IronWolf 4TB (ST4000VN008)', serial:'WGS0A1BC2345', temp:'38°C', smart:'PASSED',
+         parts:[{name:'sdd1',fs:'ext4',size:'3.63 TiB',mount:'/mnt/disk4'},{name:'sdd2',fs:'swap',size:'4 GiB',mount:'[SWAP]'}] },
+    5: { dev:'/dev/sde', model:'Seagate IronWolf 4TB (ST4000VN008)', serial:'WGS0A1BD6789', temp:'51°C', smart:'WARNING — high temperature',
+         parts:[{name:'sde1',fs:'ext4',size:'3.63 TiB',mount:'/mnt/disk5'},{name:'sde2',fs:'swap',size:'4 GiB',mount:'[SWAP]'}] },
+  };
+
+  document.querySelectorAll('.bay').forEach(bay => {
+    bay.addEventListener('click', () => {
+      document.querySelectorAll('.bay').forEach(b => b.classList.remove('bay-sel'));
+      const num = parseInt(bay.dataset.bay);
+      const d   = bayData[num];
+      if (!d) return;
+      bay.classList.add('bay-sel');
+      diskDetailTitle.textContent = 'Bay ' + num + ' — ' + d.dev;
+      let html = `<div style="display:grid;grid-template-columns:auto 1fr;gap:2px 10px;font-size:12px;margin-bottom:6px;">
+        <span style="color:#555;">Model:</span><span>${d.model}</span>
+        <span style="color:#555;">Serial:</span><span class="mono">${d.serial}</span>
+        <span style="color:#555;">Temp:</span><span>${d.temp}</span>
+        <span style="color:#555;">SMART:</span><span>${d.smart.startsWith('W') ? '<span class="badge-warn" style="font-size:10px;">'+d.smart+'</span>' : '<span class="badge-ok" style="font-size:10px;">'+d.smart+'</span>'}</span>
+      </div>
+      <div style="font-size:11px;font-weight:bold;margin-bottom:3px;">Partitions:</div>
+      <table class="lv" style="font-size:11px;">
+        <thead><tr><th>Partition</th><th>Filesystem</th><th>Size</th><th>Mount point</th></tr></thead><tbody>`;
+      d.parts.forEach(p => {
+        html += `<tr><td class="mono">${p.name}</td><td>${p.fs}</td><td>${p.size}</td><td class="mono">${p.mount}</td></tr>`;
+      });
+      html += '</tbody></table>';
+      diskDetailContent.innerHTML = html;
+      diskDetail.style.display = 'block';
+    });
+  });
+
+  // ── Table row selection ──
+  document.querySelectorAll('.lv tbody').forEach(tbody => {
+    tbody.addEventListener('click', e => {
+      const tr = e.target.closest('tr');
+      if (!tr) return;
+      tbody.querySelectorAll('tr').forEach(r => r.classList.remove('sel'));
+      tr.classList.add('sel');
+    });
+  });
+
+  // ── Shares table: enable/disable buttons on select ──
+  const sharesBody = document.querySelector('#sharesTable tbody');
+  if (sharesBody) sharesBody.addEventListener('click', e => {
+    const tr = e.target.closest('tr');
+    if (tr) {
+      document.getElementById('shareRemoveBtn').disabled = false;
+      document.getElementById('shareEditBtn').disabled   = false;
+    }
+  });
+
+  // ── Users: single / multi mode toggle ──
+  function toggleUserMode() {
+    const multi = document.getElementById('radioMulti').checked;
+    document.getElementById('singleUserInfo').style.display = multi ? 'none' : 'block';
+    document.getElementById('multiUserInfo').style.display  = multi ? 'block' : 'none';
+  }
 </script>
 </body>
 </html>
